@@ -1,0 +1,97 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct sample
+{
+    int data;
+    struct sample *next;
+};
+
+void add_at_beg(struct sample **h,int num)
+{
+struct sample*temp=(struct sample*)malloc(sizeof(struct sample));
+
+temp->data=num;
+temp->next=*h;
+*h=temp;
+}
+
+void append(struct sample **h,int num)
+{
+struct sample*temp=(struct sample*)malloc(sizeof(struct sample));
+struct sample *ptr=NULL;
+
+temp->data=num;
+temp->next=NULL;
+ ptr=*h;
+
+while(ptr->next!=NULL)
+{
+    ptr=ptr->next;
+}
+ptr->next=temp;
+}
+
+void insert(struct sample **h,int num,int pos)
+{
+struct sample*temp=(struct sample*)malloc(sizeof(struct sample));
+struct sample *ptr=NULL;
+
+temp->data=num;
+temp->next=NULL;
+ ptr=*h;
+
+for(int i=1;i<pos;i++)
+{
+    ptr=ptr->next;
+}
+temp->next=ptr->next;
+ptr->next=temp;
+}
+
+ void deleteAlt(struct sample **h)
+{
+    if (*h == NULL)
+        return;
+    struct sample *prev = *h;
+    struct sample *temp = (*h)->next;
+  
+    while (prev != NULL && temp != NULL)
+    {
+        prev->next = temp->next;
+        free(temp);
+        prev = prev->next;
+        if (prev != NULL)
+        {
+            temp = prev->next;
+        }
+    }
+}
+void display(struct sample **ptr)
+{
+    struct sample *temp=NULL;
+    temp=*ptr;
+    
+    while(temp!=NULL)
+    {
+        printf("nodes=%d\n",temp->data);
+        temp=temp->next;
+    }
+}
+
+int main()
+{
+    struct sample *p=NULL;
+    
+    add_at_beg(&p,10);
+    add_at_beg(&p,20);
+    add_at_beg(&p,30);
+    add_at_beg(&p,40);
+    
+    append(&p,1220);
+    insert(&p,111,2);
+    display(&p);
+    printf("\n");
+    deleteAlt(&p);
+    display(&p);
+}
