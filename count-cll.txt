@@ -1,0 +1,89 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct sample 
+{
+    int data;
+    struct sample *next;
+};
+
+
+void add_at_beg(struct sample**h,int num)
+{
+struct sample*temp=(struct sample*)malloc(sizeof(struct sample));
+if(*h==NULL)
+    {
+    temp->data=num;
+    temp->next=temp;
+    *h=temp;
+    }
+else
+{
+    temp->data=num;
+    temp->next=(*h)->next;
+    (*h)->next=temp;
+}
+}
+
+void append(struct sample **h,int num)
+{
+    struct sample*temp=(struct sample*)malloc(sizeof(struct sample));
+    if(*h==NULL)
+    {
+    temp->data=num;
+    temp->next=temp;
+    *h=temp;
+    }
+    else
+    {
+     temp->data=num;
+    temp->next=(*h)->next;
+    (*h)->next=temp;
+     *h=temp;
+    }
+}
+void count(struct sample **h)
+{
+    struct sample *ptr=*h;
+    struct sample *temp=*h;
+   
+    int count=0;
+   while(ptr->next!=*h)
+   {
+       count++;
+       ptr=ptr->next;
+   }
+   printf("count=%d\n",count);
+}
+
+void display(struct sample **ptr)
+{
+    if(*ptr==NULL)
+    {
+      printf("list is empty\n");   
+    }
+    else
+    {
+    struct sample *temp;
+    temp=(*ptr)->next;
+    
+  do  {
+         printf("node=%d\n",temp->data);
+        temp=temp->next;
+    }
+    while(temp!=(*ptr)->next);
+}
+}
+
+int main()
+{
+    struct sample *p=NULL;
+    add_at_beg(&p,10);
+    add_at_beg(&p,20);
+    add_at_beg(&p,30);
+    add_at_beg(&p,40);
+    append(&p,1200);
+     display(&p);
+     count(&p);
+     
+}
